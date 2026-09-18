@@ -1,0 +1,35 @@
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |
+    providers:
+      kubernetesGateway:
+        enabled: true
+    ports:
+      {{ gateway_listener_app_name }}:
+        port: {{ gateway_listener_app_port }}
+        expose:
+          default: true
+        exposedPort: {{ gateway_listener_app_port }}
+
+      {{ gateway_listener_argocd_name }}:
+        port: {{ gateway_listener_argocd_port }}
+        expose:
+          default: true
+        exposedPort: {{ gateway_listener_argocd_port }}
+
+{% if traefik_debug %}
+      traefik:
+        expose:
+          default: true
+
+    api:
+      dashboard: true
+      insecure: true
+    accessLogs:
+      enabled: true
+{% endif %}

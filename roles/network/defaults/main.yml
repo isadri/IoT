@@ -1,0 +1,13 @@
+---
+gateway_listener_app_port: 8081
+gateway_listener_app_name: app
+
+gateway_class_name: traefik
+
+gateway_listener_argocd_name: argocd
+gateway_listener_argocd_port: 8082
+
+gateway_name: traefik-gw
+gateway_namespace: default
+
+traefik_debug: true

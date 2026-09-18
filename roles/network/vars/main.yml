@@ -1,0 +1,4 @@
+---
+argocd_namespace: argocd
+argocd_service_name: argocd-server
+argocd_service_port: 80

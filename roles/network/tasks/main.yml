@@ -1,0 +1,27 @@
+---
+- name: Install Gateway API CRDs
+  ansible.builtin.command: kubectl apply --server-side --force-conflicts -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.1/standard-install.yaml
+  tags:
+    - gateway
+
+- name: Copy traeifk and routing configuration files
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: templates/k3s-traefik-config.yaml.j2
+      dest: "{{ network_base_dir }}/k3s-traefik-config.yaml"
+    - src: templates/gateway.yaml.j2
+      dest: "{{ network_base_dir }}/gateway.yaml"
+    - src: templates/httproute.yaml.j2
+      dest: "{{ network_base_dir }}/httproute.yaml"
+  tags:
+    - gateway
+
+- name: Configure traefik
+  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/k3s-traefik-config.yaml"
+  tags:
+    - gateway
+
+- name: Create Gateway API resources
+  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/"
