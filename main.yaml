@@ -1,0 +1,48 @@
+- hosts: dev
+  gather_facts: true
+
+  vars_files:
+    - vars/common.yaml
+
+  pre_tasks:
+    - name: Ensure necessary directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ base_dir }}/app"
+        - "{{ base_dir }}/network"
+
+  tasks:
+    - ansible.builtin.import_role:
+        name: k3d
+      tags:
+        - k3d
+        - cluster
+
+    - ansible.builtin.import_role:
+        name: argocd
+      tags:
+        - argocd
+
+    - name: Copy application manifests
+      ansible.builtin.template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: templates/deployment.yaml.j2
+          dest: "{{ app_dir }}/deployment.yaml"
+        - src: templates/service.yaml.j2
+          dest: "{{ app_dir }}/service.yaml"
+      tags:
+        - app
+
+    - name: Create application
+      ansible.builtin.command: "kubectl apply -f {{ app_dir }}"
+      tags:
+        - app
+
+    - ansible.builtin.import_role:
+        name: network
+      tags:
+        - network
