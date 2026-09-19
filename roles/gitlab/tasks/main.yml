@@ -13,4 +13,4 @@
   ansible.builtin.command: helm repo add gitlab https://charts.gitlab.io/
 
 - name: "Install Gitlab version {{ gitlab_helm_chart_version }}"
-  ansible.builtin.command: "helm upgrade --install gitlab gitlab/gitlab --version {{ gitlab_helm_chart_version }} --values {{ base_dir }}/gitlab/values.yaml"
+  ansible.builtin.command: "helm upgrade --install gitlab gitlab/gitlab --version {{ gitlab_helm_chart_version }} --values {{ base_dir }}/gitlab/values.yaml --wait --timeout 0s"
