@@ -1,16 +1,4 @@
+---
 base_dir: "config"
 
-app_dir: "{{ base_dir }}/app"
-app_namespace: default
-app_port: 8888
-
-image_name: wil42/playground
-image_tag: v1
-
 network_base_dir: "{{ base_dir }}/network"
-
-app_service_name: iot
-app_service_port: 8888
-service_type: ClusterIP
-
-traefik_debug: false
