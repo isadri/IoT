@@ -4,6 +4,9 @@ gateway_listener_app_name: app
 
 gateway_class_name: traefik
 
+gateway_listener_gitlab_name: gitlab
+gateway_listener_gitlab_port: 8082
+
 gateway_listener_argocd_name: argocd
 gateway_listener_argocd_port: 8082
 

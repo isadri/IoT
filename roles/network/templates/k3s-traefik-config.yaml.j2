@@ -22,14 +22,8 @@ spec:
           default: true
         exposedPort: {{ gateway_listener_argocd_port }}
 
-{% if traefik_debug %}
-      traefik:
+      {{ gateway_listener_gitlab_name }}:
+        port: {{ gateway_listener_gitlab_port }}
         expose:
           default: true
-
-    api:
-      dashboard: true
-      insecure: true
-    accessLogs:
-      enabled: true
-{% endif %}
+        exposedPort: {{ gateway_listener_gitlab_port }}
