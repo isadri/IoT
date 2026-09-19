@@ -23,5 +23,8 @@
   tags:
     - gateway
 
-- name: Create Gateway API resources
-  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/"
+- name: Create Gateway and HTTPRoute
+  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/{{ item }}.yaml"
+  loop:
+    - gateway
+    - httproute
