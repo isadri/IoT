@@ -3,6 +3,9 @@
 
   vars_files:
     - vars/common.yaml
+    - vars/app.yaml
+    - vars/argocd.yaml
+    - vars/gitlab.yaml
 
   pre_tasks:
     - name: Ensure necessary directories exist
