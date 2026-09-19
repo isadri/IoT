@@ -1,0 +1,42 @@
+global:
+  edition: ce
+  hosts:
+    domain: {{ gitlab_domain_name }}
+    https: false
+  gatewayApi:
+    enabled: false
+    configureCertmanager: false
+    installEnvoy: false
+  ingress:
+    enabled: false
+    tls:
+      enabled: false
+    configureCertmanager: false
+  registry:
+    enabled: false
+  rails:
+    bootsnap:
+      enabled: true
+  pages:
+    enabled: true
+    https: false
+  kas:
+    enabled: false
+
+gitlab-runner:
+  install: false
+
+prometheus:
+  install: false
+
+registry:
+  enabled: false
+
+nginx-ingress:
+  enabled: false
+
+gitlab:
+  toolbox:
+    enabled: false
+  sidekiq:
+    enabled: false

@@ -1,0 +1,7 @@
+---
+gitlab_helm_chart_version: "9.11.12"
+gitlab_domain_name: localhost
+gitlab_namespace: default
+
+gitlab_webservice_name: gitlab-webservice-default
+gitlab_webservice_port: 8181

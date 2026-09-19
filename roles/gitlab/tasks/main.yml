@@ -1,0 +1,16 @@
+---
+- name: Ensure Gitlab configuration directory exists
+  ansible.builtin.file:
+    path: "{{ base_dir }}/gitlab"
+    state: directory
+
+- name: Copy values file of Gitlab Helm Chart
+  ansible.builtin.template:
+    src: templates/values.yaml.j2
+    dest: "{{ base_dir }}/gitlab/values.yaml"
+
+- name: Add Gitlab Helm repo
+  ansible.builtin.command: helm repo add gitlab https://charts.gitlab.io/
+
+- name: "Install Gitlab version {{ gitlab_helm_chart_version }}"
+  ansible.builtin.command: "helm upgrade --install gitlab gitlab/gitlab --version {{ gitlab_helm_chart_version }} --values {{ base_dir }}/gitlab/values.yaml"
