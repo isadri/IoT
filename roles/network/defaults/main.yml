@@ -12,5 +12,3 @@ gateway_listener_argocd_port: 8083
 
 gateway_name: traefik-gw
 gateway_namespace: default
-
-traefik_debug: true
