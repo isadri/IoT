@@ -8,7 +8,7 @@ gateway_listener_gitlab_name: gitlab
 gateway_listener_gitlab_port: 8082
 
 gateway_listener_argocd_name: argocd
-gateway_listener_argocd_port: 8082
+gateway_listener_argocd_port: 8083
 
 gateway_name: traefik-gw
 gateway_namespace: default
