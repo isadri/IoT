@@ -12,6 +12,12 @@ spec:
         namespaces:
           from: All
     - protocol: HTTP
+      port: {{ gateway_listener_gitlab_port }}
+      name: {{ gateway_listener_gitlab_name }}
+      allowedRoutes:
+        namespaces:
+          from: All
+    - protocol: HTTP
       port: {{ gateway_listener_app_port }}
       name: {{ gateway_listener_app_name }}
       allowedRoutes:
