@@ -1,5 +1,5 @@
 ---
-gitlab_helm_chart_version: "9.11.12"
+gitlab_helm_chart_version: "10.4.0"
 gitlab_domain_name: localhost
 gitlab_namespace: default
 
