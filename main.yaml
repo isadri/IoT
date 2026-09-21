@@ -23,10 +23,11 @@
         - k3d
         - cluster
 
-    - name: Get all namespaces
-      ansible.builtin.shell: "kubectl get ns -o jsonpath='{.items[*].metadata.name}'"
-      register: namespaces
-      changed_when: false
+    - name: Register necessary variables
+      ansible.builtin.import_tasks:
+        file: tasks/register.yaml
+      tags:
+        - always
 
     - ansible.builtin.import_role:
         name: gitlab
