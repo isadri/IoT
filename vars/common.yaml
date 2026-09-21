@@ -1,4 +1,25 @@
 ---
 base_dir: "config"
-
 network_base_dir: "{{ base_dir }}/network"
+values_dir: "{{ base_dir }}/values"
+
+gitlab_pages_bucket: gitlab-pages
+gitlab_artifacts_bucket: gitlab-artifacts
+gitlab_lfs_bucket: gitlab-lfs
+gitlab_uploads_bucket: gitlab-uploads
+gitlab_packages_bucket: gitlab-packages
+buckets: "{{ gitlab_pages_bucket }},{{ gitlab_artifacts_bucket }},{{ gitlab_lfs_bucket }},{{ gitlab_uploads_bucket }},{{ gitlab_packages_bucket }}"
+connection_secret_name: minio-connection
+
+postgres_release_name: postgres
+psql_host: "{{ postgres_release_name }}-postgresql"
+psql_database: gitlabhq_production
+psql_username: gitlab
+psql_secret_name: postgres-password
+psql_password: "{{ vault_psql_password }}"
+psql_admin_password: "{{ vault_psql_admin_password }}"
+
+redis_release_name: redis
+redis_host: "{{ redis_release_name }}-master"
+redis_secret_name: redis-password
+redis_password: "{{ vault_redis_password }}"
