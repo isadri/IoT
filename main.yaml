@@ -15,8 +15,9 @@
         path: "{{ item }}"
         state: directory
       loop:
-        - "{{ base_dir }}/app"
-        - "{{ base_dir }}/network"
+        - "{{ app_dir }}"
+        - "{{ network_base_dir }}"
+        - "{{ values_dir }}"
 
   tasks:
     - ansible.builtin.import_role:
