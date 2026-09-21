@@ -20,8 +20,55 @@ global:
   pages:
     enabled: true
     https: false
+    objectStore:
+      enabled: true
+      bucket: {{ gitlab_pages_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+  psql:
+    host: {{ psql_host }}
+    database: {{ psql_database }}
+    username: {{ psql_username }}
+    password:
+      secret: {{ psql_secret_name }}
+      key: password
+
+  redis:
+    host: {{ redis_host }}
+    auth:
+      enabled: true
+      secret: {{ redis_secret_name }}
+      key: password
+
   kas:
     enabled: false
+
+  appConfig:
+    artifacts:
+      bucket: {{ gitlab_artifacts_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    lfs:
+      bucket: {{ gitlab_lfs_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    uploads:
+      bucket: {{ gitlab_uploads_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    packages:
+      bucket: {{ gitlab_packages_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
 
 gitlab-runner:
   install: false
