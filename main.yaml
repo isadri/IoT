@@ -2,10 +2,12 @@
   gather_facts: true
 
   vars_files:
+    - vars/vault/secrets.yaml
     - vars/common.yaml
     - vars/app.yaml
     - vars/argocd.yaml
     - vars/gitlab.yaml
+    - vars/minio.yaml
 
   pre_tasks:
     - name: Ensure necessary directories exist
