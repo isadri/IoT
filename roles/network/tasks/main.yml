@@ -17,6 +17,7 @@
       dest: "{{ network_base_dir }}/httproute.yaml"
   tags:
     - gateway
+    - gateway-crds
 
 - name: Configure traefik
   ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/k3s-traefik-config.yaml"
