@@ -1,0 +1,21 @@
+---
+- name: Copy connection file and values file of Minio Helm Chart
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: templates/rails.yaml.j2
+      dest: "{{ base_dir }}/minio-rails.yaml"
+    - src: templates/values.yaml.j2
+      dest: "{{ values_dir }}/minio-values.yaml"
+
+- name: Create Secret holding connection yaml file
+  ansible.builtin.command: "kubectl create secret generic {{ connection_secret_name }} --from-file=connection={{ base_dir }}/minio-rails.yaml"
+  when: connection_secret_name not in secrets.stdout.split()
+
+- name: Add Bitnami Helm Chart
+  ansible.builtin.command: helm repo add bitnami https://charts.bitnami.com/bitnami
+  when: "'bitnami' not in helm_repos.stdout.split('\n')"
+
+- name: Install Minio Helm Chart
+  ansible.builtin.command: "helm upgrade --install {{ minio_release_name }} bitnami/minio --values {{ values_dir }}/minio-values.yaml --wait --timeout 1h"
