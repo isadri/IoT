@@ -30,14 +30,27 @@
         - always
 
     - ansible.builtin.import_role:
-        name: gitlab
-      tags:
-        - gitlab
-
-    - ansible.builtin.import_role:
         name: argocd
       tags:
         - argocd
+
+    - ansible.builtin.import_role:
+        name: postgresql
+      tags:
+        - postgresql
+        - gitlab
+
+    - ansible.builtin.import_role:
+        name: redis
+      tags:
+        - redis
+        - gitlab
+
+    - ansible.builtin.import_role:
+        name: minio
+      tags:
+        - minio
+        - gitlab
 
     - name: Copy application manifests
       ansible.builtin.template:
@@ -60,3 +73,8 @@
         name: network
       tags:
         - network
+
+    - ansible.builtin.import_role:
+        name: gitlab
+      tags:
+        - gitlab
