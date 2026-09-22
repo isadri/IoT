@@ -1,8 +1,4 @@
 ---
-- name: Create argocd namespace
-  ansible.builtin.command: kubectl create ns argocd
-  when: '"argocd" not in namespaces.stdout.split()'
-
 - name: Add Argo Helm repo
   ansible.builtin.command: helm repo add argo https://argoproj.github.io/argo-helm
 
@@ -17,3 +13,15 @@
 
 - name: Wait for argocd-server to be available
   ansible.builtin.command: kubectl wait --for=condition=Available deploy/argocd-server -n argocd
+
+- name: Copy ArgoCD Application manifest
+  ansible.builtin.template:
+    src: templates/application.yaml.j2
+    dest: "{{ base_dir }}/application.yaml"
+  tags:
+    - copy-argocd-app-file
+
+- name: Create ArgoCD Application
+  ansible.builtin.command: "kubectl apply -f {{ base_dir }}/application.yaml"
+  tags:
+    - create-argocd-app
