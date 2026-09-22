@@ -28,3 +28,8 @@ redis_release_name: redis
 redis_host: "{{ redis_release_name }}-master"
 redis_secret_name: redis-password
 redis_password: "{{ vault_redis_password }}"
+
+gateway_name: traefik-gw
+gateway_namespace: "{{ application_namespace }}"
+
+gitlab_namespace: gitlab
