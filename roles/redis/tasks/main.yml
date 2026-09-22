@@ -1,6 +1,6 @@
 ---
 - name: Create Secret holding Redis password
-  ansible.builtin.command: "kubectl create secret generic {{ redis_secret_name }} --from-literal=password={{ redis_password }}"
+  ansible.builtin.command: "kubectl create secret generic {{ redis_secret_name }} --from-literal=password={{ redis_password }} -n {{ gitlab_namespace }}"
   when: 'redis_secret_name not in secrets.stdout.split()'
 
 - name: Copy values file of Redis Helm Chart
@@ -9,4 +9,4 @@
     dest: "{{ values_dir }}/redis-values.yaml"
 
 - name: Install Redis Helm Chart
-  ansible.builtin.command: "helm upgrade --install {{ redis_release_name }} oci://registry-1.docker.io/bitnamicharts/redis --values {{ values_dir }}/redis-values.yaml --wait --timeout 1h"
+  ansible.builtin.command: "helm upgrade --install {{ redis_release_name }} oci://registry-1.docker.io/bitnamicharts/redis --values {{ values_dir }}/redis-values.yaml -n {{ gitlab_namespace }} --wait --timeout 1h"
