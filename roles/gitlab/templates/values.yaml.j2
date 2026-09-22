@@ -25,6 +25,10 @@ global:
       connection:
         secret: {{ connection_secret_name }}
         key: connection
+  webservice:
+    hpa:
+      minReplicas: {{ gitlab_webservice_min_replicas }}
+      maxReplicas: {{ gitlab_webservice_max_replicas }}
 
   psql:
     host: {{ psql_host }}
