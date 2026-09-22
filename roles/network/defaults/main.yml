@@ -1,14 +1,13 @@
 ---
-gateway_listener_app_port: 8081
-gateway_listener_app_name: app
+gatewan_name: traefik-gw
+gatewan_namespace: default
+gateway_listener_http_port: 8000
+gateway_listener_http_name: http
 
 gateway_class_name: traefik
 
-gateway_listener_gitlab_name: gitlab
-gateway_listener_gitlab_port: 8082
-
-gateway_listener_argocd_name: argocd
-gateway_listener_argocd_port: 8083
-
 gateway_name: traefik-gw
 gateway_namespace: default
+
+gateway_app_hostname: app.iot.local
+gateway_argocd_hostname: argocd.iot.local

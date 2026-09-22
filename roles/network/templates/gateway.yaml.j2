@@ -2,24 +2,13 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: {{ gateway_name }}
+  namespace: {{ gateway_namespace }}
 spec:
   gatewayClassName: {{ gateway_class_name }}
   listeners:
     - protocol: HTTP
-      port: {{ gateway_listener_argocd_port }}
-      name: {{ gateway_listener_argocd_name }}
-      allowedRoutes:
-        namespaces:
-          from: All
-    - protocol: HTTP
-      port: {{ gateway_listener_gitlab_port }}
-      name: {{ gateway_listener_gitlab_name }}
-      allowedRoutes:
-        namespaces:
-          from: All
-    - protocol: HTTP
-      port: {{ gateway_listener_app_port }}
-      name: {{ gateway_listener_app_name }}
+      port: {{ gateway_listener_http_port }}
+      name: {{ gateway_listener_http_name }}
       allowedRoutes:
         namespaces:
           from: All
