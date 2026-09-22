@@ -57,6 +57,21 @@
         - minio
         - gitlab
 
+    - ansible.builtin.import_role:
+        name: network
+      tags:
+        - network
+
+    - ansible.builtin.import_role:
+        name: gitlab
+      tags:
+        - gitlab
+
+    - ansible.builtin.import_tasks:
+        file: tasks/create-gitlab-webservice-svc-vars.yaml
+      tags:
+        - gitlab-webservice-vars
+
     - name: Copy application manifests
       ansible.builtin.template:
         src: "{{ item.src }}"
@@ -69,17 +84,7 @@
       tags:
         - app
 
-    - name: Create application
-      ansible.builtin.command: "kubectl apply -f {{ app_dir }}"
-      tags:
-        - app
-
     - ansible.builtin.import_role:
-        name: network
+        name: argocd
       tags:
-        - network
-
-    - ansible.builtin.import_role:
-        name: gitlab
-      tags:
-        - gitlab
+        - argocd
