@@ -32,10 +32,12 @@
       tags:
         - always
 
-    - ansible.builtin.import_role:
-        name: argocd
+    - name: Create namespaces
+      ansible.builtin.import_tasks:
+        file: tasks/namespaces.yaml
       tags:
-        - argocd
+        - always
+        - create-namespaces
 
     - ansible.builtin.import_role:
         name: postgresql
