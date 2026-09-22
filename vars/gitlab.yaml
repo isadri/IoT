@@ -1,7 +1,8 @@
 ---
 gitlab_helm_chart_version: "10.4.0"
-gitlab_domain_name: localhost
-gitlab_namespace: default
+gitlab_domain_name: gitlab.iot.local
+gitlab_ssh_domain_name: ssh.gitlab.iot.local
+gitlab_pages_domain_name: pages.gitlab.iot.local
 
 gitlab_webservice_name: gitlab-webservice-default
 gitlab_webservice_port: 8181

@@ -3,9 +3,11 @@
   ansible.builtin.template:
     src: templates/values.yaml.j2
     dest: "{{ values_dir }}/gitlab-values.yaml"
+  tags:
+    - copy-gitlab-values-file
 
 - name: Add Gitlab Helm repo
   ansible.builtin.command: helm repo add gitlab https://charts.gitlab.io/
 
 - name: "Install Gitlab version {{ gitlab_helm_chart_version }}"
-  ansible.builtin.command: "helm upgrade --install {{ gitlab_release_name }} gitlab/gitlab --version {{ gitlab_helm_chart_version }} --values {{ values_dir }}/gitlab-values.yaml --wait --timeout 1h"
+  ansible.builtin.command: "helm upgrade --install {{ gitlab_release_name }} gitlab/gitlab --version {{ gitlab_helm_chart_version }} --values {{ values_dir }}/gitlab-values.yaml -n {{ gitlab_namespace }} --wait --timeout 1h"
