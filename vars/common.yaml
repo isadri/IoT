@@ -3,6 +3,11 @@ base_dir: "config"
 network_base_dir: "{{ base_dir }}/network"
 values_dir: "{{ base_dir }}/values"
 
+cluster_mapped_ports:
+  - port: 80:80
+
+application_namespace: dev
+
 gitlab_pages_bucket: gitlab-pages
 gitlab_artifacts_bucket: gitlab-artifacts
 gitlab_lfs_bucket: gitlab-lfs
