@@ -118,3 +118,6 @@
 
     - name: Create ArgoCD Application
       ansible.builtin.command: "kubectl apply -f {{ argocd_dir }}/application.yaml"
+
+    - ansible.builtin.debug:
+        msg: "To access ArgoCD, open http://{{ gateway_argocd_hostname }} and enter username 'admin' and password '{{ argocd_admin_password.stdout }}'."
