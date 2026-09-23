@@ -7,7 +7,6 @@ global:
       name: {{ gitlab_domain_name }}
     pages:
       name: {{ gitlab_pages_domain_name }}
-    #ssh: {{ gitlab_ssh_domain_name }}
   gatewayApi:
     configureCertmanager: false
     installEnvoy: false
@@ -101,7 +100,3 @@ gitlab:
     enabled: false
   gitlab-shell:
     enabled: false
-
-#gatewayApiResources:
-#  gateway:
-#    protocol: HTTP
