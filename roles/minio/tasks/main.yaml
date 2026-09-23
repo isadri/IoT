@@ -1,17 +1,20 @@
 ---
-- name: Create Secret holding connection yaml file
-  ansible.builtin.command: "kubectl create secret generic {{ connection_secret_name }} --from-file=connection={{ base_dir }}/minio-rails.yaml -n {{ gitlab_namespace }}"
-  when: connection_secret_name not in secrets.stdout.split()
-
-- name: Copy connection file and values file of Minio Helm Chart
+- name: Copy values file of Minio Helm Chart
   ansible.builtin.template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
   loop:
-    - src: templates/rails.yaml.j2
-      dest: "{{ base_dir }}/minio-rails.yaml"
     - src: templates/values.yaml.j2
       dest: "{{ values_dir }}/minio-values.yaml"
+
+- ansible.builtin.import_tasks:
+    file: tasks/get_secrets.yaml
+  vars:
+    secrets_namespace: "{{ gitlab_namespace }}"
+
+- name: Create Secret holding access and secret keys
+  ansible.builtin.command: "kubectl create secret generic {{ minio_secret_name }} -n {{ gitlab_namespace }} --from-literal=accessKey={{ minio_access_key }} --from-literal=secretKey={{ minio_secret_access_key }}"
+  when: minio_secret_name not in secrets.stdout.split()
 
 - name: Add Bitnami Helm Chart
   ansible.builtin.command: helm repo add bitnami https://charts.bitnami.com/bitnami

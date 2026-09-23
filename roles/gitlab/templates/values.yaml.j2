@@ -7,7 +7,7 @@ global:
       name: {{ gitlab_domain_name }}
     pages:
       name: {{ gitlab_pages_domain_name }}
-    ssh: {{ gitlab_ssh_domain_name }}
+    #ssh: {{ gitlab_ssh_domain_name }}
   gatewayApi:
     configureCertmanager: false
     installEnvoy: false
@@ -28,9 +28,6 @@ global:
       connection:
         secret: {{ connection_secret_name }}
         key: connection
-    gatewayRoute:
-      enabled: true
-      sectionName: {{ gateway_listener_http_name }}
 
   psql:
     host: {{ psql_host }}
@@ -75,6 +72,10 @@ global:
         secret: {{ connection_secret_name }}
         key: connection
 
+installCertmanager: false
+certmanager:
+  installCRDs: true
+
 gitlab-runner:
   install: false
 
@@ -88,19 +89,19 @@ nginx-ingress:
   enabled: false
 
 gitlab:
-  gatewayRoute:
-    enabled: true
-    sectionName: {{ gateway_listener_http_name }}
+  webservice:
+    gatewayRoute:
+        sectionName: {{ gateway_listener_http_name }}
+  gitlab-pages:
+    gatewayRoute:
+        sectionName: {{ gateway_listener_http_name }}
   toolbox:
     enabled: false
   sidekiq:
     enabled: false
+  gitlab-shell:
+    enabled: false
 
-gatewayApiResources:
-  gateway:
-    protocol: HTTP
-
-gitlab-shell:
-  gatewayRoute:
-    enabled: true
-    sectionName: {{ gateway_listener_http_name }}
+#gatewayApiResources:
+#  gateway:
+#    protocol: HTTP
