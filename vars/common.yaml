@@ -34,3 +34,5 @@ gateway_name: traefik-gw
 gateway_namespace: "{{ app_namespace }}"
 
 gitlab_namespace: gitlab
+
+minio_host: minio

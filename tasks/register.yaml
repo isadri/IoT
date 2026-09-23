@@ -4,11 +4,6 @@
   register: namespaces
   changed_when: false
 
-- name: Get all secrets
-  ansible.builtin.command: "kubectl get secret -o jsonpath='{.items[*].metadata.name}'"
-  register: secrets
-  changed_when: false
-
 - name: Get all Helm repos
   ansible.builtin.shell: helm repo list -o json | jq -r '.[].name'
   register: helm_repos
