@@ -4,6 +4,6 @@ argocd_service_name: argocd-server
 argocd_service_port: 80
 argocd_source_repo_server: "http://{{ gitlab_webservice_name }}:{{ gitlab_webservice_port }}"
 
-argocd_source_repo_path: ""
+argocd_source_repo_path: "root/iot.git"
 
-gateway_listener_argocd_hostname: argocd.iot.local
+gateway_argocd_hostname: argocd.iot.local

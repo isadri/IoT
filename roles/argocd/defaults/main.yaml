@@ -1,2 +1,4 @@
 ---
 argocd_source_path: .
+argocd_app_name: iot
+argocd_project: default

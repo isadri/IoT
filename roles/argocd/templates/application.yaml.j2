@@ -4,14 +4,14 @@ metadata:
   name: {{ argocd_app_name }}
   namespace: {{ argocd_namespace }}
 spec:
-  poject: {{ argocd_project }}
+  project: {{ argocd_project }}
   source:
-    repoURL: {{ argocd_source_repo_server }}:{{ argocd_source_repo_path }}
-    tagetRevision: HEAD
+    repoURL: {{ argocd_source_repo_server }}/{{ argocd_source_repo_path }}
+    targetRevision: HEAD
     path: {{ argocd_source_path }}
   destination:
     server: https://kubernetes.default.svc
-    namespace: {{ application_namespace }}
+    namespace: {{ app_namespace }}
   syncPolicy:
     automated:
       enabled: true

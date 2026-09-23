@@ -17,11 +17,11 @@
 - name: Copy ArgoCD Application manifest
   ansible.builtin.template:
     src: templates/application.yaml.j2
-    dest: "{{ base_dir }}/application.yaml"
+    dest: "{{ argocd_dir }}/application.yaml"
   tags:
-    - copy-argocd-app-file
+    - copy-argocd-app-manifest
 
 - name: Create ArgoCD Application
-  ansible.builtin.command: "kubectl apply -f {{ base_dir }}/application.yaml"
+  ansible.builtin.command: "kubectl apply -f {{ argocd_dir }}/application.yaml"
   tags:
-    - create-argocd-app
+    - never
