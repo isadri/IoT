@@ -16,7 +16,7 @@
         state: directory
       loop:
         - "{{ app_dir }}"
-        - "{{ network_base_dir }}"
+        - "{{ network_dir }}"
         - "{{ values_dir }}"
 
   tasks:

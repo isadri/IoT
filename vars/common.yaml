@@ -1,6 +1,6 @@
 ---
 base_dir: "config"
-network_base_dir: "{{ base_dir }}/network"
+network_dir: "{{ base_dir }}/network"
 values_dir: "{{ base_dir }}/values"
 
 cluster_mapped_ports:

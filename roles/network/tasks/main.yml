@@ -11,24 +11,24 @@
     dest: "{{ item.dest }}"
   loop:
     - src: templates/k3s-traefik-config.yaml.j2
-      dest: "{{ network_base_dir }}/k3s-traefik-config.yaml"
+      dest: "{{ network_dir }}/k3s-traefik-config.yaml"
     - src: templates/gateway.yaml.j2
-      dest: "{{ network_base_dir }}/gateway.yaml"
+      dest: "{{ network_dir }}/gateway.yaml"
     - src: templates/httproute.yaml.j2
-      dest: "{{ network_base_dir }}/httproute.yaml"
+      dest: "{{ network_dir }}/httproute.yaml"
   tags:
     - gateway
     - copy-gateway-config
     - copy-httproute-config
 
 - name: Configure traefik
-  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/k3s-traefik-config.yaml"
+  ansible.builtin.command: "kubectl apply -f {{ network_dir }}/k3s-traefik-config.yaml"
   tags:
     - gateway
     - enable-traefik-gateway
 
 - name: Create Gateway and HTTPRoute
-  ansible.builtin.command: "kubectl apply -f {{ network_base_dir }}/{{ item }}.yaml"
+  ansible.builtin.command: "kubectl apply -f {{ network_dir }}/{{ item }}.yaml"
   loop:
     - gateway
     - httproute
