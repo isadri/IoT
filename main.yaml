@@ -18,6 +18,7 @@
         - "{{ app_dir }}"
         - "{{ network_dir }}"
         - "{{ values_dir }}"
+        - "{{ argocd_dir }}"
 
   tasks:
     - ansible.builtin.import_role:

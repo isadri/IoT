@@ -2,11 +2,12 @@
 base_dir: "config"
 network_dir: "{{ base_dir }}/network"
 values_dir: "{{ base_dir }}/values"
+argocd_dir: "{{ base_dir }}/argocd"
 
 cluster_mapped_ports:
   - port: 80:80
 
-application_namespace: dev
+app_namespace: dev
 
 gitlab_pages_bucket: gitlab-pages
 gitlab_artifacts_bucket: gitlab-artifacts
@@ -30,6 +31,6 @@ redis_secret_name: redis-password
 redis_password: "{{ vault_redis_password }}"
 
 gateway_name: traefik-gw
-gateway_namespace: "{{ application_namespace }}"
+gateway_namespace: "{{ app_namespace }}"
 
 gitlab_namespace: gitlab
