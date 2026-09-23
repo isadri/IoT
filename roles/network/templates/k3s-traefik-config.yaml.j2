@@ -9,21 +9,3 @@ spec:
     providers:
       kubernetesGateway:
         enabled: true
-    ports:
-      {{ gateway_listener_app_name }}:
-        port: {{ gateway_listener_app_port }}
-        expose:
-          default: true
-        exposedPort: {{ gateway_listener_app_port }}
-
-      {{ gateway_listener_argocd_name }}:
-        port: {{ gateway_listener_argocd_port }}
-        expose:
-          default: true
-        exposedPort: {{ gateway_listener_argocd_port }}
-
-      {{ gateway_listener_gitlab_name }}:
-        port: {{ gateway_listener_gitlab_port }}
-        expose:
-          default: true
-        exposedPort: {{ gateway_listener_gitlab_port }}
