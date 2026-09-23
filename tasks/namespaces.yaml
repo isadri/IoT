@@ -4,12 +4,12 @@
   when: app_namespace not in namespaces.stdout.split()
   changed_when: app_namespace not in namespaces.stdout.split()
 
-- name: Create argocd namespace if does not exist
+- name: "Create {{ argocd_namespace }} namespace if does not exist"
   ansible.builtin.command: "kubectl create ns {{ argocd_namespace }}"
   when: argocd_namespace not in namespaces.stdout.split()
   changed_when: argocd_namespace not in namespaces.stdout.split()
 
-- name: Create gitlab namespace if does not exist
+- name: "Create {{ gitlab_namespace }} namespace if does not exist"
   ansible.builtin.command: "kubectl create ns {{ gitlab_namespace }}"
   when: gitlab_namespace not in namespaces.stdout.split()
   changed_when: gitlab_namespace not in namespaces.stdout.split()
