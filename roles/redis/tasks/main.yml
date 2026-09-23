@@ -1,4 +1,9 @@
 ---
+- ansible.builtin.import_tasks:
+    file: tasks/get_secrets.yaml
+  vars:
+    secrets_namespace: "{{ gitlab_namespace }}"
+
 - name: Create Secret holding Redis password
   ansible.builtin.command: "kubectl create secret generic {{ redis_secret_name }} --from-literal=password={{ redis_password }} -n {{ gitlab_namespace }}"
   when: 'redis_secret_name not in secrets.stdout.split()'
