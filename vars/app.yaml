@@ -1,7 +1,7 @@
 ---
 app_dir: "{{ base_dir }}/app"
 app_port: 8888
-application_namespace: dev
+app_namespace: dev
 
 image_name: wil42/playground
 image_tag: v1

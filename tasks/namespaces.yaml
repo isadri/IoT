@@ -1,8 +1,8 @@
 ---
-- name: Create application namespace if does not exist
-  ansible.builtin.command: "kubectl create ns {{ application_namespace }}"
-  when: application_namespace not in namespaces.stdout.split()
-  changed_when: application_namespace not in namespaces.stdout.split()
+- name: "Create {{ app_namespace }} namespace if does not exist"
+  ansible.builtin.command: "kubectl create ns {{ app_namespace }}"
+  when: app_namespace not in namespaces.stdout.split()
+  changed_when: app_namespace not in namespaces.stdout.split()
 
 - name: Create argocd namespace if does not exist
   ansible.builtin.command: "kubectl create ns {{ argocd_namespace }}"
