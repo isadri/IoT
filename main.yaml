@@ -89,3 +89,9 @@
         name: argocd
       tags:
         - argocd
+
+    - ansible.builtin.import_tasks:
+        file: tasks/store-users-info.yaml
+      vars:
+        argocd_admin_secret: argocd-initial-admin-secret
+        gitlab_root_password: gitlab-gitlab-initial-root-password

@@ -1,0 +1,16 @@
+---
+- name: Get ArgoCd admin password
+  ansible.builtin.shell: "kubectl get secret -n {{ argocd_namespace }} {{ argocd_admin_secret }} -o jsonpath='{.data.password}' | base64 -d"
+  register: argocd_admin_password
+  changed_when: false
+
+- name: Store Argocd admin password
+  ansible.builtin.shell: "echo {{ argocd_admin_password.stdout }} > {{ base_dir }}/argocd-passwd.txt"
+
+- name: Get Gitlab root password
+  ansible.builtin.shell: "kubectl get secret -n {{ gitlab_namespace }} {{ gitlab_root_password }} -o jsonpath='{.data.password}' | base64 -d"
+  register: gitlab_root_password
+  changed_when: false
+
+- name: Store Gitlab root password
+  ansible.builtin.shell: "echo {{ gitlab_root_password.stdout }} > {{ base_dir }}/gitlab-passwd.txt"
