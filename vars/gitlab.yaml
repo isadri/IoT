@@ -4,3 +4,5 @@ gitlab_pages_domain_name: pages.gitlab.iot.local
 
 gitlab_webservice_name: gitlab-webservice-default
 gitlab_webservice_port: 8181
+
+gitlab_project_name: "iot"
