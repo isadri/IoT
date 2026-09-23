@@ -105,7 +105,6 @@
     - ansible.builtin.import_tasks:
         file: tasks/gitlab-repo.yaml
       vars:
-        gitlab_project_name: "zoro"
         gitlab_private_token: "{{ private_token.user_input }}"
 
     - name: Copy ArgoCD Application manifest
@@ -113,7 +112,6 @@
         src: templates/application.yaml.j2
         dest: "{{ argocd_dir }}/application.yaml"
       vars:
-        gitlab_project_name: "zoro"
         argocd_source_repo_path: "root/{{ gitlab_project_name }}.git"
       tags:
         - copy-argocd-app-manifest
