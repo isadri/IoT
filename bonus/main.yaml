@@ -23,6 +23,11 @@
 
   tasks:
     - ansible.builtin.import_role:
+        name: common
+      tags:
+        - common
+
+    - ansible.builtin.import_role:
         name: k3d
       tags:
         - k3d
