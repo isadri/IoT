@@ -1,6 +1,13 @@
 ---
+- name: Check if Helm is already installed
+  ansible.builtin.command: helm version
+  failed_when: false
+  changed_when: false
+  register: helm_version
+
 - name: Install Helm
   ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
   become: true
+  when: helm_version.rc != 0
   tags:
     - helm
