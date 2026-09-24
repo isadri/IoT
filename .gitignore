@@ -5,3 +5,5 @@ config/
 kubectl
 
 .passwd
+
+*.swp
