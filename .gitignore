@@ -1,4 +1,7 @@
+.vagrant/
+node_token
 .venv/
 config/
+kubectl
 
 .passwd
