@@ -1,0 +1,22 @@
+---
+- name: Get Gitlab Webservice Service name
+  ansible.builtin.shell: "kubectl get svc --selector gitlab.com/webservice-name=default -n {{ gitlab_namespace }} -o jsonpath='{.items[0].metadata.name}'"
+  register: gitlab_webservice_name_cmd
+  changed_when: false
+  tags:
+    - argocd
+
+- name: Get Gitlab Webservice Service port
+  ansible.builtin.shell: "kubectl get svc --selector gitlab.com/webservice-name=default -n {{ gitlab_namespace }} -o json | jq -r '.items[0].spec.ports[] | select(.name == \"http-workhorse\") | .port'"
+  register: gitlab_webservice_port_cmd
+  changed_when: false
+  tags:
+    - argocd
+
+- name: Create gitlab_webservice_name
+  ansible.builtin.set_fact:
+    gitlab_webservice_name: "{{ gitlab_webservice_name_cmd.stdout }}.{{ gitlab_namespace }}"
+
+- name: Create gitlab_webservice_port
+  ansible.builtin.set_fact:
+    gitlab_webservice_port: "{{ gitlab_webservice_port_cmd.stdout }}"

@@ -1,0 +1,6 @@
+---
+gitlab_helm_chart_version: "9.11.12"
+gitlab_release_name: gitlab
+
+gitlab_webservice_min_replicas: 1
+gitlab_webservice_max_replicas: 1

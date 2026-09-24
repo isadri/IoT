@@ -1,0 +1,10 @@
+---
+console:
+  enabled: false
+image:
+  repository: {{ minio_image_repository }}
+auth:
+  existingSecret: {{ minio_secret_name }}
+  rootUserSecretKey: accessKey
+  rootPasswordSecretKey: secretKey
+defaultBuckets: {{ buckets }}

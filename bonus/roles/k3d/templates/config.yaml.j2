@@ -1,0 +1,15 @@
+apiVersion: k3d.io/v1alpha5
+kind: Simple
+metadata:
+  name: {{ cluster_name }}
+servers: {{ number_of_servers }}
+agents: {{ number_of_agents }}
+ports: {{ cluster_mapped_ports }}
+options:
+  k3d:
+    wait: true
+  k3s:
+    extraArgs:
+      - arg: "--disable=metric-server"
+        nodeFilters:
+          - server:*

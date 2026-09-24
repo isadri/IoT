@@ -1,0 +1,6 @@
+replica:
+  replicaCount: {{ redis_replica_count }}
+auth:
+  enabled: true
+  existingSecret: {{ redis_secret_name }}
+  existingSecretPasswordKey: password

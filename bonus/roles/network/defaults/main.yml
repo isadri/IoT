@@ -1,0 +1,10 @@
+---
+gatewan_name: traefik-gw
+gatewan_namespace: default
+gateway_listener_http_port: 8000
+gateway_listener_http_name: http
+
+gateway_class_name: traefik
+
+gateway_name: traefik-gw
+gateway_namespace: default

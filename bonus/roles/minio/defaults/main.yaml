@@ -1,0 +1,4 @@
+---
+minio_image_repository: bitnamilegacy/minio
+minio_release_name: minio
+minio_secret_name: minio-keys-secret

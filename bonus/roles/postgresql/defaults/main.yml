@@ -1,0 +1,6 @@
+---
+psql_release_name: postgres
+
+psql_resources_req_mem: 1Gi
+psql_resources_req_cpu: 500m
+psql_resources_lim_mem: 3Gi
