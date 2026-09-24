@@ -18,7 +18,7 @@ if [[ "$1" == "create" ]]; then
     echo "  Install Ansible and any dependencies"
     pip install -r requirements.txt
 
-    ansible-playbook main.yaml --extra-vars=cluster_name="$CLUSTER_NAME"
+    ansible-playbook main.yaml --extra-vars=cluster_name="$CLUSTER_NAME" --ask-become-pass
 
 elif [[ "$1" == "delete" ]]; then
     k3d cluster delete "$CLUSTER_NAME"
