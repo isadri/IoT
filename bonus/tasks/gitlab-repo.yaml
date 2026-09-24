@@ -33,4 +33,3 @@
     - service.yaml
   tags:
     - create-gitlab-project
-    - upload-app-manifests
