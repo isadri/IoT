@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-# SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
-sudo apt update
-sudo apt install -y curl
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Docker
 if ! command -v docker &>/dev/null; then
@@ -44,8 +41,7 @@ echo "Waiting for Argo CD to be ready..."
 kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
 
 # Deploy Argo CD Application
-# kubectl apply -f "$SCRIPT_DIR/../confs/argocd-app.yaml"
-kubectl apply -f "/home/vagrant/confs/argocd-app.yaml"
+kubectl apply -f "$SCRIPT_DIR/../confs/argocd-app.yaml"
 
 echo ""
 echo "=== Argo CD admin password ==="
