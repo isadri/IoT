@@ -1,4 +1,0 @@
----
-cluster_name: local
-number_of_servers: 1
-number_of_agents: 1
