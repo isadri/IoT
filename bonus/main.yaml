@@ -37,13 +37,12 @@
       ansible.builtin.import_tasks:
         file: tasks/register.yaml
       tags:
-        - always
+        - register-vars
 
     - name: Create namespaces
       ansible.builtin.import_tasks:
         file: tasks/namespaces.yaml
       tags:
-        - always
         - create-namespaces
 
     - ansible.builtin.import_role:
