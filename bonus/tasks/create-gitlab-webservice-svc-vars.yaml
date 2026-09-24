@@ -15,7 +15,7 @@
 
 - name: Create gitlab_webservice_name
   ansible.builtin.set_fact:
-    gitlab_webservice_name: "{{ gitlab_webservice_name_cmd.stdout }}.{{ gitlab_namespace }}"
+    gitlab_webservice_name: "{{ gitlab_webservice_name_cmd.stdout }}"
 
 - name: Create gitlab_webservice_port
   ansible.builtin.set_fact:
