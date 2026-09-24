@@ -1,10 +1,4 @@
 ---
-- name: Check if k3d is already installed
-  ansible.builtin.command: k3d --version
-  failed_when: false
-  changed_when: false
-  register: result
-
 - name: Install k3d
   ansible.builtin.shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
   when: result.rc != 0
