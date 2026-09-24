@@ -20,6 +20,9 @@
         - "{{ values_dir }}"
         - "{{ argocd_dir }}"
 
+  roles:
+    - ansible-output-prettify
+
   tasks:
     - ansible.builtin.import_role:
         name: k3d

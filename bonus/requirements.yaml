@@ -1,0 +1,2 @@
+- src: https://github.com/roots/ansible-output-prettify.git
+  name: ansible-output-prettify
