@@ -4,7 +4,7 @@ set -e
 apt-get update -y
 apt-get install -y curl
 
-curl -sfL https://get.k3s.io | sh -
+curl -sfL https://get.k3s.io | sh -s - server --write-kubeconfig-mode=644
 
 until kubectl get nodes &>/dev/null; do
 	sleep 2
