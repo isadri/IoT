@@ -1,6 +1,5 @@
 - name: Setup Gitlab and ArgoCD
   hosts: dev
-  become: true
   gather_facts: true
 
   vars_files:
