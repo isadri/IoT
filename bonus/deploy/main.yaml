@@ -109,6 +109,12 @@
       tags:
         - argocd
 
+    - name: Add application, Gitlab, and ArgoCD hostnames to /etc/hosts
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        regex: "^127.0.0.1 {{ gateway_app_hostname }} {{ gitlab_domain_name }} {{ gitlab_pages_domain_name }} {{ gateway_argocd_hostname }}"
+        line: "127.0.0.1 {{ gateway_app_hostname }} {{ gitlab_domain_name }} {{ gitlab_pages_domain_name }} {{ gateway_argocd_hostname }}"
+
     - ansible.builtin.import_tasks:
         file: tasks/store-users-info.yaml
       vars:
