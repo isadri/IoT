@@ -14,7 +14,7 @@
   pre_tasks:
     - name: Wait for remote host to accept connection
       ansible.builtin.wait_for_connection:
-        connect_timeout: 5s
+        connect_timeout: 5
         sleep: 2
 
     - name: Gather facts
