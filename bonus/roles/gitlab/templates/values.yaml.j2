@@ -89,6 +89,11 @@ nginx-ingress:
 
 gitlab:
   webservice:
+    deployments:
+      default:
+        progressDeadlineSeconds: 3600
+      workhorse:
+        progressDeadlineSeconds: 3600
     gatewayRoute:
         sectionName: {{ gateway_listener_http_name }}
   gitlab-pages:

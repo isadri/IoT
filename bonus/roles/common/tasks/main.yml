@@ -25,6 +25,7 @@
     dest: /usr/local/bin/kubectl
     mode: "+x"
     checksum: "sha256:{{ kubectl_checksum.content }}"
+  become: true
   tags:
     - kubectl
     - k3d
@@ -39,5 +40,6 @@
 
 - name: Install Helm
   ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
+  become: true
   tags:
     - helm
