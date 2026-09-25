@@ -33,3 +33,14 @@
 - name: Wait for helm install traefik crd job to complete
   ansible.builtin.command: "kubectl wait --for=condition=complete -n kube-system job/{{ helm_install_traefik_crd_job.stdout }} --timeout 5m"
   changed_when: false
+
+- name: Get kubeconfig file path
+  ansible.builtin.command: "k3d kubeconfig write {{ cluster_name }}"
+  register: kubeconfig_file_path
+  changed_when: false
+
+- name: Set KUBECONFIG environment variable
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    regex: "^KUBECONFIG="
+    line: "KUBECONFIG={{ kubeconfig_file_path.stdout }}"
