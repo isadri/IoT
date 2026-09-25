@@ -91,11 +91,6 @@ gitlab:
   webservice:
     gatewayRoute:
         sectionName: {{ gateway_listener_http_name }}
-    deployments:
-      default:
-        progressDeadlineSeconds: 3600
-      workhorse:
-        progressDeadlineSeconds: 3600
   gitlab-pages:
     gatewayRoute:
         sectionName: {{ gateway_listener_http_name }}
