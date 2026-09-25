@@ -57,6 +57,9 @@
     - containerd.io
     - docker-buildx-plugin
 
+- name: Update apt cache
+  ansible.builtin.apt: update_cache=true
+
 - name: Ensure docker group exists
   ansible.builtin.group:
     name: docker
