@@ -1,5 +1,5 @@
 ---
-- name: Create Gitlab Projects
+- name: Create Gitlab Project
   ansible.builtin.uri:
     url: "http://{{ gitlab_domain_name }}/api/v4/projects"
     method: POST
