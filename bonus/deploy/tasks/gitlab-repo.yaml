@@ -15,21 +15,44 @@
   tags:
     - create-gitlab-project
 
-- name: Upload application manifests
+- name: Get deployment.yaml file content
+  ansible.builtin.slurp:
+    src: "{{ app_dir }}/deployment.yaml"
+  register: deployment_content
+
+- name: Get service.yaml file content
+  ansible.builtin.slurp:
+    src: "{{ app_dir }}/service.yaml"
+  register: service_content
+
+- name: Upload deployment.yaml manifest
   ansible.builtin.uri:
-    url: "http://{{ gitlab_domain_name }}/api/v4/projects/{{ project_response.json.id }}/repository/files/{{ item }}"
+    url: "http://{{ gitlab_domain_name }}/api/v4/projects/{{ project_response.json.id }}/repository/files/deployment.yaml"
     method: POST
     body_format: json
     headers:
       PRIVATE-TOKEN: "{{ gitlab_private_token }}"
     body:
       branch: main
-      content: "{{ lookup('ansible.builtin.file', app_dir + '/' + item) }}"
-      commit_message: "upload {{ item }}"
+      content: "{{ deployment_content.content | b64decode }}"
+      commit_message: "upload deployment.yaml"
     status_code:
       - 201
-  loop:
-    - deployment.yaml
-    - service.yaml
+  tags:
+    - create-gitlab-project
+
+- name: Upload service.yaml manifest
+  ansible.builtin.uri:
+    url: "http://{{ gitlab_domain_name }}/api/v4/projects/{{ project_response.json.id }}/repository/files/service.yaml"
+    method: POST
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_private_token }}"
+    body:
+      branch: main
+      content: "{{ service_content.content | b64decode }}"
+      commit_message: "upload service.yaml"
+    status_code:
+      - 201
   tags:
     - create-gitlab-project
