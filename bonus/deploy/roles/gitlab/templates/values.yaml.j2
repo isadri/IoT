@@ -91,6 +91,7 @@ gitlab:
   webservice:
     gatewayRoute:
         sectionName: {{ gateway_listener_http_name }}
+    progressDeadlineSeconds: 2400
   gitlab-pages:
     gatewayRoute:
         sectionName: {{ gateway_listener_http_name }}
