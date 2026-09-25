@@ -4,10 +4,9 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
   config.vm.network "private_network", ip: "192.168.56.110"
-  config.vm.network "forwarded_port", host: 80, guest: 80
 
-  config.vm.provider "virtualbox" do |v|
-    v.memory = 12288
-    v.cpus = 6
+  config.vm.provider "vmware_desktop" do |v|
+    v.memory = 16284
+    v.cpus = 8
   end
 end
