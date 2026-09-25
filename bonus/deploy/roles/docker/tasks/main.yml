@@ -47,6 +47,9 @@
     architectures: "{{ arch.stdout }}"
     signed_by: /etc/apt/keyrings/docker.asc
 
+- name: Update apt cache
+  ansible.builtin.apt: update_cache=true
+
 - name: Install Docker
   ansible.builtin.apt:
     name: "{{ item }}"
@@ -56,9 +59,6 @@
     - docker-ce-cli
     - containerd.io
     - docker-buildx-plugin
-
-- name: Update apt cache
-  ansible.builtin.apt: update_cache=true
 
 - name: Ensure docker group exists
   ansible.builtin.group:
