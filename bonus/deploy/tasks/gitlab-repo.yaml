@@ -32,4 +32,4 @@
     - deployment.yaml
     - service.yaml
   tags:
-    - create-gitlab-project
+    - upload-application-manifests
