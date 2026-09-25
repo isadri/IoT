@@ -1,5 +1,5 @@
 - name: Setup Gitlab and ArgoCD
-  hosts: stage
+  hosts: dev
   become: true
   gather_facts: false
 
@@ -35,11 +35,6 @@
         name: common
       tags:
         - common
-
-    - ansible.builtin.import_role:
-        name: docker
-      tags:
-        - docker
 
     - ansible.builtin.import_role:
         name: k3d
