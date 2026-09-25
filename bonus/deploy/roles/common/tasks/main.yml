@@ -11,7 +11,7 @@
 
 - name: Get checksum
   ansible.builtin.uri:
-    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/linux/amd64/kubectl.sha256"
+    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/linux/arm64/kubectl.sha256"
     return_content: true
   register: kubectl_checksum
   changed_when: false
@@ -21,7 +21,7 @@
 
 - name: Install the latest version kubectl
   ansible.builtin.get_url:
-    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/linux/amd64/kubectl"
+    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/linux/arm64/kubectl"
     dest: /usr/local/bin/kubectl
     mode: "+x"
     checksum: "sha256:{{ kubectl_checksum.content }}"
