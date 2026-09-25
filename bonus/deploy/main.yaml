@@ -1,7 +1,7 @@
 - name: Setup Gitlab and ArgoCD
   hosts: stage
   become: true
-  gather_facts: true
+  gather_facts: false
 
   vars_files:
     - vars/vault/secrets.yaml
@@ -12,6 +12,14 @@
     - vars/minio.yaml
 
   pre_tasks:
+    - name: Wait for remote host to accept connection
+      ansible.builtin.wait_for_connection:
+        connect_timeout: 5s
+        sleep: 2
+
+    - name: Gather facts
+      ansible.builtin.setup:
+
     - name: Ensure necessary directories exist
       ansible.builtin.file:
         path: "{{ item }}"
