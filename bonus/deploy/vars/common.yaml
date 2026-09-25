@@ -1,5 +1,5 @@
 ---
-base_dir: "config"
+base_dir: "/opt/iot/config"
 network_dir: "{{ base_dir }}/network"
 values_dir: "{{ base_dir }}/values"
 argocd_dir: "{{ base_dir }}/argocd"
