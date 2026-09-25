@@ -1,0 +1,46 @@
+---
+- name: Get latest stable release
+  ansible.builtin.uri:
+    url: https://dl.k8s.io/release/stable.txt
+    return_content: true
+  register: latest_release
+  changed_when: false
+  tags:
+    - kubectl
+    - k3d
+
+- name: Get checksum
+  ansible.builtin.uri:
+    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/darwin/arm64/kubectl.sha256"
+    return_content: true
+  register: kubectl_checksum
+  changed_when: false
+  tags:
+    - kubectl
+    - k3d
+
+- name: Install the latest version kubectl
+  ansible.builtin.get_url:
+    url: "https://dl.k8s.io/release/{{ latest_release.content }}/bin/darwin/arm64/kubectl"
+    dest: /usr/local/bin/kubectl
+    mode: "+x"
+    checksum: "sha256:{{ kubectl_checksum.content }}"
+  become: true
+  tags:
+    - kubectl
+    - k3d
+
+- name: Check if Helm is already installed
+  ansible.builtin.command: helm version
+  failed_when: false
+  changed_when: false
+  register: helm_version
+  tags:
+    - helm
+
+- name: Install Helm
+  ansible.builtin.shell: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4 | bash
+  become: true
+  when: helm_version.rc != 0
+  tags:
+    - helm

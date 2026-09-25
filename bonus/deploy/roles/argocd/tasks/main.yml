@@ -1,0 +1,19 @@
+---
+- name: Add Argo Helm repo
+  ansible.builtin.command: helm repo add argo https://argoproj.github.io/argo-helm
+
+- name: Update Helm repo
+  ansible.builtin.command: helm repo update
+  changed_when: false
+
+- name: Install ArgoCD Helm Chart
+  ansible.builtin.command: helm upgrade --install argocd argo/argo-cd -n argocd --wait --timeout 1h
+
+- name: Disable ArgoCD TLS
+  ansible.builtin.command: "kubectl patch cm argocd-cmd-params-cm -n argocd -p '{\"data\": {\"server.insecure\": \"true\"}}'"
+
+- name: Restart argocd-server
+  ansible.builtin.command: kubectl rollout restart deploy argocd-server -n argocd
+
+- name: Wait for argocd-server to be available
+  ansible.builtin.command: kubectl wait --for=condition=Available deploy/argocd-server -n argocd

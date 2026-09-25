@@ -1,0 +1,35 @@
+---
+- name: Create Gitlab Projects
+  ansible.builtin.uri:
+    url: "http://{{ gitlab_domain_name }}/api/v4/projects"
+    method: POST
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_private_token }}"
+    body:
+      name: "{{ gitlab_project_name }}"
+      visibility: public
+    status_code:
+      - 201
+  register: project_response
+  tags:
+    - create-gitlab-project
+
+- name: Upload application manifests
+  ansible.builtin.uri:
+    url: "http://{{ gitlab_domain_name }}/api/v4/projects/{{ project_response.json.id }}/repository/files/{{ item }}"
+    method: POST
+    body_format: json
+    headers:
+      PRIVATE-TOKEN: "{{ gitlab_private_token }}"
+    body:
+      branch: main
+      content: "{{ lookup('ansible.builtin.file', app_dir + '/' + item) }}"
+      commit_message: "upload {{ item }}"
+    status_code:
+      - 201
+  loop:
+    - deployment.yaml
+    - service.yaml
+  tags:
+    - create-gitlab-project

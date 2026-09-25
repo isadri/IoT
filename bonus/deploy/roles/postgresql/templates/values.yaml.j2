@@ -1,0 +1,21 @@
+image:
+  repository: bitnamilegacy/postgresql
+  tag: 17.6.0-debian-12-r4
+
+primary:
+  resources:
+    requests:
+      memory: {{ psql_resources_req_mem }}
+      cpu: {{ psql_resources_req_cpu }}
+    limits:
+      memory: {{ psql_resources_lim_mem }}
+
+global:
+  postgresql:
+    auth:
+      postgresPassword: postgres
+      username: {{ psql_username }}
+      database: {{ psql_database }}
+      existingSecret: {{ psql_secret_name }}
+      userPasswordKey: password
+      adminPasswordKey: admin-password

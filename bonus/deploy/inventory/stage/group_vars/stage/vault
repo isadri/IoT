@@ -1,0 +1,2 @@
+vault_ansible_user: vagrant
+vault_ansible_ssh_private_key_file: /Users/isadri/.vagrant.d/insecure_private_key

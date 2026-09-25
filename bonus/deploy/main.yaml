@@ -1,0 +1,137 @@
+- name: Setup Gitlab and ArgoCD
+  hosts: dev
+  gather_facts: true
+
+  vars_files:
+    - vars/vault/secrets.yaml
+    - vars/common.yaml
+    - vars/app.yaml
+    - vars/argocd.yaml
+    - vars/gitlab.yaml
+    - vars/minio.yaml
+
+  pre_tasks:
+    - name: Ensure necessary directories exist
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - "{{ app_dir }}"
+        - "{{ network_dir }}"
+        - "{{ values_dir }}"
+        - "{{ argocd_dir }}"
+
+  tasks:
+    - ansible.builtin.import_role:
+        name: common
+      tags:
+        - common
+
+    - ansible.builtin.import_role:
+        name: docker
+      tags:
+        - docker
+
+    - ansible.builtin.import_role:
+        name: k3d
+      tags:
+        - k3d
+        - cluster
+
+    - name: Register necessary variables
+      ansible.builtin.import_tasks:
+        file: tasks/register.yaml
+      tags:
+        - register-vars
+
+    - name: Create namespaces
+      ansible.builtin.import_tasks:
+        file: tasks/namespaces.yaml
+      tags:
+        - create-namespaces
+
+    - ansible.builtin.import_role:
+        name: postgresql
+      tags:
+        - postgresql
+        - gitlab
+
+    - ansible.builtin.import_role:
+        name: redis
+      tags:
+        - redis
+        - gitlab
+
+    - ansible.builtin.import_role:
+        name: minio
+      tags:
+        - minio
+        - gitlab
+
+    - ansible.builtin.import_role:
+        name: network
+      tags:
+        - network
+
+    - ansible.builtin.import_role:
+        name: gitlab
+      tags:
+        - gitlab
+
+    - ansible.builtin.import_tasks:
+        file: tasks/create-gitlab-webservice-svc-vars.yaml
+      tags:
+        - gitlab-webservice-vars
+
+    - name: Copy application manifests
+      ansible.builtin.template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: templates/deployment.yaml.j2
+          dest: "{{ app_dir }}/deployment.yaml"
+        - src: templates/service.yaml.j2
+          dest: "{{ app_dir }}/service.yaml"
+      tags:
+        - app
+
+    - ansible.builtin.import_role:
+        name: argocd
+      tags:
+        - argocd
+
+    - ansible.builtin.import_tasks:
+        file: tasks/store-users-info.yaml
+      vars:
+        argocd_admin_secret: argocd-initial-admin-secret
+        gitlab_root_password: gitlab-gitlab-initial-root-password
+      tags:
+        - gitlab-argocd-users-info
+
+    - name: Get Gitlab Token
+      ansible.builtin.pause:
+        echo: false
+        prompt: "Login to http://{{ gitlab_domain_name }} with username 'root' and password '{{ gitlab_root_password.stdout }}'. Then create a Legacy Access Token with read_repository, read_api, write_repository, api scopes and enter it."
+      register: private_token
+      tags:
+        - gitlab-private-token
+
+    - ansible.builtin.import_tasks:
+        file: tasks/gitlab-repo.yaml
+      vars:
+        gitlab_private_token: "{{ private_token.user_input }}"
+
+    - name: Copy ArgoCD Application manifest
+      ansible.builtin.template:
+        src: templates/application.yaml.j2
+        dest: "{{ argocd_dir }}/application.yaml"
+      vars:
+        argocd_source_repo_path: "root/{{ gitlab_project_name }}.git"
+      tags:
+        - copy-argocd-app-manifest
+
+    - name: Create ArgoCD Application
+      ansible.builtin.command: "kubectl apply -f {{ argocd_dir }}/application.yaml"
+
+    - ansible.builtin.debug:
+        msg: "To access ArgoCD, open http://{{ gateway_argocd_hostname }} and enter username 'admin' and password '{{ argocd_admin_password.stdout }}'."

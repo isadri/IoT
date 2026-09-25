@@ -1,0 +1,102 @@
+global:
+  edition: ce
+  hosts:
+    domain: {{ gitlab_domain_name }}
+    https: false
+    gitlab:
+      name: {{ gitlab_domain_name }}
+    pages:
+      name: {{ gitlab_pages_domain_name }}
+  gatewayApi:
+    configureCertmanager: false
+    installEnvoy: false
+    gatewayRef:
+      name: {{ gateway_name }}
+      namespace: {{ gateway_namespace }}
+  ingress:
+    enabled: false
+    tls:
+      enabled: false
+    configureCertmanager: false
+  pages:
+    enabled: true
+    https: false
+    objectStore:
+      enabled: true
+      bucket: {{ gitlab_pages_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+  psql:
+    host: {{ psql_host }}
+    database: {{ psql_database }}
+    username: {{ psql_username }}
+    password:
+      secret: {{ psql_secret_name }}
+      key: password
+
+  redis:
+    host: {{ redis_host }}
+    auth:
+      enabled: true
+      secret: {{ redis_secret_name }}
+      key: password
+
+  kas:
+    enabled: false
+
+  appConfig:
+    artifacts:
+      bucket: {{ gitlab_artifacts_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    lfs:
+      bucket: {{ gitlab_lfs_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    uploads:
+      bucket: {{ gitlab_uploads_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+    packages:
+      bucket: {{ gitlab_packages_bucket }}
+      connection:
+        secret: {{ connection_secret_name }}
+        key: connection
+
+installCertmanager: false
+certmanager:
+  installCRDs: true
+
+gitlab-runner:
+  install: false
+
+prometheus:
+  install: false
+
+registry:
+  enabled: false
+
+nginx-ingress:
+  enabled: false
+
+gitlab:
+  webservice:
+    gatewayRoute:
+        sectionName: {{ gateway_listener_http_name }}
+  gitlab-pages:
+    gatewayRoute:
+        sectionName: {{ gateway_listener_http_name }}
+  toolbox:
+    enabled: false
+  sidekiq:
+    enabled: false
+  gitlab-shell:
+    enabled: false
