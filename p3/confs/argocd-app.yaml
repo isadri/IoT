@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/s0uk1/ssabbaji-IoT
+    repoURL: https://github.com/isadri/isadri-app.git
     targetRevision: HEAD
     path: .
   destination:
