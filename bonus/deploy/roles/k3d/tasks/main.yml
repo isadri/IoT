@@ -1,6 +1,7 @@
 ---
 - name: Install k3d
   ansible.builtin.shell: curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
+  become: true
 
 - name: Copy configuration file
   ansible.builtin.template:
