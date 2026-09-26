@@ -2,7 +2,7 @@
 app_port: 8888
 app_namespace: dev
 
-image_name: wil42/playground
+image_name: isadri/iot-app
 image_tag: v1
 
 app_service_name: iot
